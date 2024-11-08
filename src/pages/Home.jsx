@@ -14,9 +14,13 @@ function Home(){
     }
     return(
         <div>
-            <button onClick={HandlerInstructor}>Modificar instructor</button>
-            <button onClick={HandlerShift}>Modificar Turno</button>
-            <button onClick={HandlerStudent}>Modificar Alumno</button>
+            <h1>Menu</h1>
+            <h3>Deportes de nieve</h3>
+            <div className="opciones-menu">
+                <button onClick={HandlerInstructor}>Modificar instructor</button>
+                <button onClick={HandlerShift}>Modificar Turno</button>
+                <button onClick={HandlerStudent}>Modificar Alumno</button>
+            </div>
         </div>
     )
 }
