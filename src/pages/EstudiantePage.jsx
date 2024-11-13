@@ -1,23 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom'; // Importar Link
-import Estudiante from '../components/estudiante';
-import './students.css';
-
+import { Link } from 'react-router-dom'; 
+import Estudiante from '../components/Estudiantes/Estudiante';
+import './pagesStyles.css';
+import BackendCaller from '../backend-caller/Alumnos';
 
 function Student() {
     const [students, setStudents] = useState([]);
 
+    async function fetchStudents() {
+        const response = await BackendCaller.getAllStudents();
+
+        if (response) { 
+            setStudents(response.alumnos);
+
+        }
+    }
+
     useEffect(() => {
-        axios.get('http://127.0.0.1:5000/api/alumnos')
-            .then(res => {
-                console.log('Lista de estudiantes:', res.data);
-                setStudents(res.data.alumnos); // Acceder a la lista correcta en la respuesta
-            })
-            .catch(err => {
-                console.error('Error al obtener estudiantes:', err);
-            });
-    }, []);
+        fetchStudents();
+    }, [])
 
     return (
         <div >
@@ -25,14 +27,14 @@ function Student() {
                 <Link to={"/AgregarEstudiante"}>
                 <button className='botonAgregar'>Agregar estudiante</button>
                 </Link>
-                <div className='estudiantes-container'>
+                <div className='container'>
                     {students && students.map((estudiante) => (
                         <Estudiante
-                            key={estudiante.ci} // Añadir una key única para cada elemento
+                            key={estudiante.ci} 
                             nombre={estudiante.nombre}
                             ci={estudiante.ci}
                             apellido={estudiante.apellido}
-                            fecha_nacimiento={estudiante.fecha_nacimiento} // Acceder al valor en estudiante
+                            fecha_nacimiento={estudiante.fecha_nacimiento} 
                         />
                     ))}
                 </div>

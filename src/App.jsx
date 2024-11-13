@@ -3,11 +3,11 @@ import './App.css'
 import Register from './components/register'
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom'
 import Home from './pages/Home'
-import Student from './pages/Student'
-import Teacher from './components/Teacher'
-import Shift from './components/Shift'
+import Student from './pages/EstudiantePage'
+import InstructorPage from './pages/InstructorPage'
 import Login from './pages/Login'
-import AgregarEstudiante from './pages/AgregarEstudiante'
+import AgregarEstudiante from './components/Estudiantes/AgregarEstudiante'
+import AgregarInstructor from './components/Instructores/AgregarInstructor'
 
 export const authenticatedContext = createContext()
 
@@ -20,17 +20,19 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path='/register' element={<Register />} />
-          <Route path='/shift' element={
-            isAuthenticated ? <Shift /> : <Navigate to="/login" />
+          <Route path='/instructor' element={
+            isAuthenticated ? <InstructorPage /> : <Navigate to="/login" />
           } />
 
           <Route path='agregarEstudiante' element={
             isAuthenticated ? <AgregarEstudiante /> : <Navigate to="/login" />} />
+          <Route path='agregarInstructor' element={
+            isAuthenticated ? <AgregarInstructor /> : <Navigate to="/login" />} />
 
-          <Route path='/teacher' element={
-            isAuthenticated ? <Teacher /> : <Navigate to="/login" />
-          } />
-          <Route path='/student' element={
+          {/* <Route path='/turno' element={
+            isAuthenticated ? <Turno /> : <Navigate to="/login" />
+          } /> */}
+          <Route path='/estudiante' element={
             isAuthenticated ? <Student /> : <Navigate to="/login" />
           } />
           <Route path='/' element={

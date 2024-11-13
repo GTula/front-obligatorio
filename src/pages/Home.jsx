@@ -4,13 +4,13 @@ import { useNavigate } from "react-router-dom";
 function Home(){
     const navigate = useNavigate();
     const HandlerInstructor = () =>{
-        navigate('/teacher')
+        navigate('/instructor')
     }
     const HandlerShift = () =>{
-        navigate('/shift')
+        navigate('/turno')
     }
     const HandlerStudent = () =>{
-        navigate('/student')
+        navigate('/estudiante')
     }
     return(
         <div>

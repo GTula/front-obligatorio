@@ -1,29 +1,22 @@
 import { useState } from 'react'
-import axios from 'axios';
-import "./agregarJuego.css"
 import { useNavigate } from 'react-router-dom';
+import BackendCaller from '../../backend-caller/Instructores';
+import '../commonStyles/agregarPersona.css'
 
-function AgregarEstudiante() {
-    const baseURL = "http://localhost:5000/api/alumnos"  // Cambié la URL para apuntar a tu backend
+function AgregarInstructor() {
 
     const navigate = useNavigate();
 
-    const postEstudiante = () => {
-        axios.post(baseURL, info)
-            .then((response) => {
-                console.log('Estudiante agregado:', response.data);
-                navigate('/student');  
-            })
-            .catch((error) => {
-                console.error('Error al agregar el estudiante:', error);
-            });
-    };
+
+    async function postInstructor(info) {
+        navigate('/instructor')
+        await BackendCaller.addInstructor(info);
+    }
 
     const [info, setInfo] = useState({
         ci: '',
         nombre: '',
         apellido: '',
-        fecha_nacimiento: '',
     });
 
     const handleInputChange = (e) => {
@@ -40,7 +33,7 @@ function AgregarEstudiante() {
                 <input
                     type="text"
                     name="ci"
-                    placeholder="CI del estudiante"
+                    placeholder="CI del instructor"
                     value={info.ci}
                     onChange={handleInputChange}
                 />
@@ -58,17 +51,10 @@ function AgregarEstudiante() {
                     value={info.apellido}
                     onChange={handleInputChange}
                 />
-                <input
-                    type="date"  // Asumí que `fecha_nacimiento` es una fecha
-                    name="fecha_nacimiento"
-                    placeholder="Fecha de Nacimiento"
-                    value={info.fecha_nacimiento}
-                    onChange={handleInputChange}
-                />
             </div>
-            <button className='boton-agregar' onClick={postEstudiante}>AGREGAR ESTUDIANTE</button>
+            <button className='boton-agregar' onClick={() => postInstructor(info)}>AGREGAR INSTRUCTOR</button>
         </div>
     );
 }
 
-export default AgregarEstudiante;
+export default AgregarInstructor;
