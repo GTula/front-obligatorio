@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom'; 
 import Instructor from '../components/Instructores/Instructor';
 import './pagesStyles.css';
 import BackendCaller from '../backend-caller/Instructores';
+import { reloadContext } from '../components/commonContexts/ReloadPageProvider';
 
 function InstructorPage() {
     const [instructores, setInstructores] = useState([]);
+
+    const [reload, setReload] = useContext(reloadContext)
 
     async function fetchInstructores() {
         const response = await BackendCaller.getAllInstructores();
@@ -16,9 +19,10 @@ function InstructorPage() {
         }
     }
 
+
     useEffect(() => {
         fetchInstructores();
-    }, [])
+    }, [reload])
 
     return (
         <div >

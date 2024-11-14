@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import '../commonStyles/Card-style.css';
 import BackendCaller from '../../backend-caller/Instructores';
+import { reloadContext } from '../commonContexts/ReloadPageProvider';
 
 function Instructor(props) {
     const { nombre, ci, apellido } = props;
@@ -9,6 +10,8 @@ function Instructor(props) {
     const [showNewModal, setShowNewModal] = useState(false);
     const [instructorDetails, setInstructorDetails] = useState(null);
 
+    const [reload, setReload] = useContext(reloadContext)
+
     const [info, setInfo] = useState({
         nombre: nombre || '',
         apellido: apellido || '',
@@ -16,6 +19,7 @@ function Instructor(props) {
 
     async function eliminarInstructor(ci) {
         await BackendCaller.deleteInstructorByCi(ci);
+        setReload(!reload);
     }
 
     async function mostrarDetalles(ci) {
@@ -28,7 +32,7 @@ function Instructor(props) {
 
     async function modificarInstructor() {
         await BackendCaller.putInstructorByCi(ci, info);
-        console.log(ci, info)
+        setReload(!reload);
         setShowNewModal(false);
         mostrarDetalles(ci);
     }
@@ -80,6 +84,7 @@ function Instructor(props) {
                 <div className='modal-overlay'>
                     <div className='modal'>
                         <h2>Ingrese los nuevos valores</h2>
+                        <p>Nombre:</p>
                         <input
                             type="text"
                             name="nombre" 
@@ -87,6 +92,7 @@ function Instructor(props) {
                             value={info.nombre}
                             onChange={handleInputChange}
                         />
+                        <p>Apellido:</p>
                         <input
                             type="text"
                             name="apellido" 

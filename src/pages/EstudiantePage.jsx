@@ -1,12 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom'; 
 import Estudiante from '../components/Estudiantes/Estudiante';
 import './pagesStyles.css';
 import BackendCaller from '../backend-caller/Alumnos';
+import { reloadContext } from '../components/commonContexts/ReloadPageProvider';
 
 function Student() {
     const [students, setStudents] = useState([]);
+
+    const [reload, setReload] = useContext(reloadContext)
+
 
     async function fetchStudents() {
         const response = await BackendCaller.getAllStudents();
@@ -19,7 +23,7 @@ function Student() {
 
     useEffect(() => {
         fetchStudents();
-    }, [])
+    }, [reload])
 
     return (
         <div >

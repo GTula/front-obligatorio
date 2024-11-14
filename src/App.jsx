@@ -8,6 +8,7 @@ import InstructorPage from './pages/InstructorPage'
 import Login from './pages/Login'
 import AgregarEstudiante from './components/Estudiantes/AgregarEstudiante'
 import AgregarInstructor from './components/Instructores/AgregarInstructor'
+import { ReloadPageProvider } from './components/commonContexts/ReloadPageProvider'
 
 export const authenticatedContext = createContext()
 
@@ -17,6 +18,7 @@ function App() {
 
   return (
     <authenticatedContext.Provider value={[isAuthenticated, setIsAuthenticated]}>
+      <ReloadPageProvider>
       <BrowserRouter>
         <Routes>
           <Route path='/register' element={<Register />} />
@@ -44,6 +46,7 @@ function App() {
           />
         </Routes>
       </BrowserRouter>
+      </ReloadPageProvider>
     </authenticatedContext.Provider>
   )
 }
