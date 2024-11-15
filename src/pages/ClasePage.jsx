@@ -1,16 +1,19 @@
 import React, { useContext, useEffect, useState } from 'react';
-import axios from 'axios';
 import { Link } from 'react-router-dom'; 
 import Clase from '../components/Clases/Clase';
 import './pagesStyles.css';
 import BackendCaller from '../backend-caller/Clases';
 import { reloadContext } from '../components/commonContexts/ReloadPageProvider';
+import { useNavigate } from 'react-router-dom';
 
 function ClasePage() {
     const [clases, setClases] = useState([]);
 
     const [reload, setReload] = useContext(reloadContext)
-
+    const navigate = useNavigate();
+    const handleBack = () => {
+        navigate('/');
+    }
 
     async function fetchClases() {
         const response = await BackendCaller.getAllClases();
@@ -31,6 +34,7 @@ function ClasePage() {
                 <Link to={"/AgregarClase"}>
                 <button className='botonAgregar'>Agregar clase</button>
                 </Link>
+                <button onClick={handleBack}>Volver</button>
                 <div className='container'>
                     {clases && clases.map((clase) => (
                         <Clase

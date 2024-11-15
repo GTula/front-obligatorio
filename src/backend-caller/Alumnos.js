@@ -1,4 +1,6 @@
-export class BackendCallerAlumno {
+import axios from "axios";
+
+export class BackendCallerAlumno {    
     static #API_URL = 'http://127.0.0.1:5000/api/alumnos';
 
     static async getAllStudents() {

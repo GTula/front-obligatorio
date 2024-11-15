@@ -2,9 +2,12 @@ import React, { useContext, useState } from 'react';
 import '../commonStyles/Card-style.css'
 import BackendCallerAlumno from '../../backend-caller/Alumnos';
 import { reloadContext } from '../commonContexts/ReloadPageProvider';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function Estudiante(props) {
     const { nombre, ci, fecha_nacimiento, apellido } = props;
+    const navigate = useNavigate();
 
     const [showModal, setShowModal] = useState(false);
     const [showNewModal, setShowNewModal] = useState(false);
@@ -52,6 +55,35 @@ function Estudiante(props) {
         });
     }
 
+    const vincularActividad = async () => {
+        const idClase = prompt("Ingrese el ID de la clase a la que desea vincular al estudiante:");
+        const idEquipo = prompt("Ingrese el ID del equipo al que desea vincular al estudiante:");
+
+        if (!idClase) {
+            alert("Debe ingresar un ID de clase válido.");
+            return;
+        }
+
+        try {
+            const response = await axios.post('http://127.0.0.1:5000/api/alumno-clase', {
+                ci_alumno: ci,
+                id_clase: idClase,
+                id_equipamiento: idEquipo
+            });
+
+            alert(`Éxito: ${response.data.mensaje}`);
+        } catch (error) {
+            if (error.response) {
+                alert(`Error del servidor: ${error.response.data.error}`);
+            } else {
+                alert("Error al conectar con el servidor.");
+            }
+        }
+    };
+
+    
+
+
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setInfo({
@@ -79,6 +111,7 @@ function Estudiante(props) {
                         <p><strong>Apellido:</strong> {studentDetails.apellido}</p>
                         <p><strong>Fecha de Nacimiento:</strong> {studentDetails.fecha_nacimiento}</p>
                         <button onClick={cerrarModal}>Cerrar</button>
+                        <button onClick={vincularActividad}>Vincular actividad</button>
                     </div>
                 </div>
             )}
