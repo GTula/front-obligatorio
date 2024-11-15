@@ -24,16 +24,29 @@ function AgregarClase() {
     // Fetch data for dropdowns on component mount
     useEffect(() => {
         async function fetchOptions() {
-            const instructoresResponse = await BackendCallerInstructor.getAllInstructores();
-            const actividadesResponse = await BackendCallerActividad.getAllActividades();
-            const turnosResponse = await BackendCallerTurno.getAllTurnos();
+            try {
+                const instructoresResponse = await BackendCallerInstructor.getAllInstructores();
+                const actividadesResponse = await BackendCallerActividad.getAllActividades();
+                const turnosResponse = await BackendCallerTurno.getAllTurnos();
+    
+                setInstructores(instructoresResponse.instructores || []);
+                console.log(instructoresResponse);
+                setActividades(actividadesResponse || []);
+                console.log(actividadesResponse );
 
-            setInstructores(instructoresResponse.data);
-            setActividades(actividadesResponse.data);
-            setTurnos(turnosResponse.data);
+                setTurnos(turnosResponse || []);
+                console.log(turnosResponse );
+
+            } catch (error) {
+                console.error("Error al cargar los datos:", error);
+                setInstructores([]); 
+                setActividades([]);
+                setTurnos([]);
+            }
         }
         fetchOptions();
     }, []);
+    
 
     async function postClase(info) {
         await BackendCallerClase.addClase(info);
@@ -72,10 +85,11 @@ function AgregarClase() {
                     <option value="">Seleccione una actividad</option>
                     {actividades.map(actividad => (
                         <option key={actividad.id} value={actividad.id}>
-                            {actividad.descripcion}
+                            {actividad.nombre} 
                         </option>
                     ))}
                 </select>
+
 
                 <select
                     name="id_turno"
@@ -85,7 +99,7 @@ function AgregarClase() {
                     <option value="">Seleccione un turno</option>
                     {turnos.map(turno => (
                         <option key={turno.id} value={turno.id}>
-                            {turno.hora_inicio} - {turno.hora_fin}
+                            {turno.hora_inicio} - {turno.hora_final}
                         </option>
                     ))}
                 </select>

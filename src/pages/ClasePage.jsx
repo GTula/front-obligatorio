@@ -28,7 +28,7 @@ function ClasePage() {
     return (
         <div >
                 <h1 className='titulo'>Lista de clases</h1>
-                <Link to={"/AgregarEstudiante"}>
+                <Link to={"/AgregarClase"}>
                 <button className='botonAgregar'>Agregar clase</button>
                 </Link>
                 <div className='container'>
