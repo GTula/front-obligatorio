@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
-import axios from 'axios';
 import { Link } from 'react-router-dom'; 
 import Instructor from '../components/Instructores/Instructor';
 import './pagesStyles.css';
 import BackendCallerInstructor from '../backend-caller/Instructores';
 import { reloadContext } from '../components/commonContexts/ReloadPageProvider';
+import { useNavigate } from 'react-router-dom';
 
 function InstructorPage() {
     const [instructores, setInstructores] = useState([]);
@@ -18,7 +18,10 @@ function InstructorPage() {
             console.log(response)
         }
     }
-
+    const navigate = useNavigate();
+    const handleBack = () => {
+        navigate('/');
+    }
 
     useEffect(() => {
         fetchInstructores();
@@ -30,6 +33,7 @@ function InstructorPage() {
                 <Link to={"/AgregarInstructor"}>
                 <button className='botonAgregar'>Agregar instructor</button>
                 </Link>
+                <button onClick={handleBack}>Volver</button>
                 <div className='container'>
                     {instructores && instructores.map((instructor) => (
                         <Instructor
