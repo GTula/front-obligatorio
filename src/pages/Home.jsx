@@ -1,5 +1,6 @@
 import { Navigate } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import './home.css';
 
 function Home(){
     const navigate = useNavigate();
@@ -20,10 +21,10 @@ function Home(){
             <h1>Menu</h1>
             <h3>Deportes de nieve</h3>
             <div className="opciones-menu">
-                <button onClick={HandlerInstructor}>Modificar instructor</button>
-                <button onClick={HandlerShift}>Modificar Turno</button>
-                <button onClick={HandlerStudent}>Modificar Alumno</button>
-                <button onClick={HandlerClass}>Clases</button>
+                <button className="boton-opciones-menu" onClick={HandlerInstructor}>Modificar instructor</button>
+                <button className="boton-opciones-menu" onClick={HandlerShift}>Modificar Turno</button>
+                <button className="boton-opciones-menu" onClick={HandlerStudent}>Modificar Alumno</button>
+                <button className="boton-opciones-menu" onClick={HandlerClass}>Clases</button>
 
             </div>
         </div>

@@ -5,12 +5,19 @@ import Estudiante from '../components/Estudiantes/Estudiante';
 import './pagesStyles.css';
 import BackendCallerAlumno from '../backend-caller/Alumnos';
 import { reloadContext } from '../components/commonContexts/ReloadPageProvider';
+import { useNavigate } from 'react-router-dom';
 
 function Student() {
     const [students, setStudents] = useState([]);
+    
 
     const [reload, setReload] = useContext(reloadContext)
 
+    const navigate = useNavigate();
+
+    const handleBack = () => {
+        navigate('/');
+    }
 
     async function fetchStudents() {
         const response = await BackendCallerAlumno.getAllStudents();
@@ -28,6 +35,7 @@ function Student() {
     return (
         <div >
                 <h1 className='titulo'>Lista de estudiantes</h1>
+                <button onClick={handleBack}>Volver</button>
                 <Link to={"/AgregarEstudiante"}>
                 <button className='botonAgregar'>Agregar estudiante</button>
                 </Link>
