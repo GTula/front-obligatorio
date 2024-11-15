@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom'; 
 import Instructor from '../components/Instructores/Instructor';
 import './pagesStyles.css';
-import BackendCaller from '../backend-caller/Instructores';
+import BackendCallerInstructor from '../backend-caller/Instructores';
 import { reloadContext } from '../components/commonContexts/ReloadPageProvider';
 
 function InstructorPage() {
@@ -12,7 +12,7 @@ function InstructorPage() {
     const [reload, setReload] = useContext(reloadContext)
 
     async function fetchInstructores() {
-        const response = await BackendCaller.getAllInstructores();
+        const response = await BackendCallerInstructor.getAllInstructores();
         if (response) { 
             setInstructores(response.instructores);
             console.log(response)

@@ -1,4 +1,4 @@
-export class BackendCaller {
+export class BackendCallerAlumno {
     static #API_URL = 'http://127.0.0.1:5000/api/alumnos';
 
     static async getAllStudents() {
@@ -94,4 +94,4 @@ export class BackendCaller {
     }
 }
 
-export default BackendCaller;
+export default BackendCallerAlumno;

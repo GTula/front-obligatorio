@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom'; 
 import Estudiante from '../components/Estudiantes/Estudiante';
 import './pagesStyles.css';
-import BackendCaller from '../backend-caller/Alumnos';
+import BackendCallerAlumno from '../backend-caller/Alumnos';
 import { reloadContext } from '../components/commonContexts/ReloadPageProvider';
 
 function Student() {
@@ -13,7 +13,7 @@ function Student() {
 
 
     async function fetchStudents() {
-        const response = await BackendCaller.getAllStudents();
+        const response = await BackendCallerAlumno.getAllStudents();
 
         if (response) { 
             setStudents(response.alumnos);

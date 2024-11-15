@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import BackendCaller from '../../backend-caller/Instructores';
+import BackendCallerInstructor from '../../backend-caller/Instructores';
 import '../commonStyles/agregarPersona.css'
 
 function AgregarInstructor() {
@@ -10,7 +10,7 @@ function AgregarInstructor() {
 
     async function postInstructor(info) {
         navigate('/instructor')
-        await BackendCaller.addInstructor(info);
+        await BackendCallerInstructor.addInstructor(info);
     }
 
     const [info, setInfo] = useState({

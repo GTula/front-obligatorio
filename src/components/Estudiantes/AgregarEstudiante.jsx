@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import BackendCaller from '../../backend-caller/Alumnos';
+import BackendCallerAlumno from '../../backend-caller/Alumnos';
 import '../commonStyles/agregarPersona.css'
 
 function AgregarEstudiante() {
@@ -11,7 +11,7 @@ function AgregarEstudiante() {
 
     async function postEstudiante(info) {
         navigate('/estudiante')
-        await BackendCaller.addStudent(info);
+        await BackendCallerAlumno.addStudent(info);
     }
 
     const [info, setInfo] = useState({

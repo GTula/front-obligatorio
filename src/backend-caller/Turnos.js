@@ -1,7 +1,7 @@
-export class BackendCallerInstructor {
-    static #API_URL = 'http://127.0.0.1:5000/api/instructores';
+export class BackendCallerTurno {
+    static #API_URL = 'http://127.0.0.1:5000/api/turnos';
 
-    static async getAllInstructores() {
+    static async getAllTurnos() {
         try {
             const response = await fetch(this.#API_URL, { method: "GET" });
 
@@ -12,41 +12,41 @@ export class BackendCallerInstructor {
             const data = await response.json();
             return data;
         } catch (error) {
-            console.error("Error al obtener todos los instructores:", error);
+            console.error("Error al obtener todas los turnos:", error);
         }
     }
 
-    static async deleteInstructorByCi(instructorCi) {
+    static async deleteTurnoById(turnoId) {
         try {
-            const response = await fetch(`${this.#API_URL}/${instructorCi}`, { method: "DELETE" });
+            const response = await fetch(`${this.#API_URL}/${turnoId}`, { method: "DELETE" });
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
 
             return { success: true };
         } catch (error) {
-            console.error("Error al eliminar el instructor:", error);
+            console.error("Error al eliminar el turno:", error);
             return { success: false };
         }
     }
 
-    static async getInstructorByCi(instructorCi) {
+    static async getTurnoById(turnoId) {
         try {
-            const response = await fetch(`${this.#API_URL}/${instructorCi}`, { method: "GET" });
+            const response = await fetch(`${this.#API_URL}/${turnoId}`, { method: "GET" });
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
     
             const data = await response.json();
-            return data.instructor; 
+            return data; 
         } catch (error) {
-            console.error("Error al recoger los detalles del intructor:", error);
+            console.error("Error al recoger los detalles del turno:", error);
             return null;
         }
     }
     
 
-    static async addInstructor(obj) {
+    static async addClase(obj) {
         try {
             const response = await fetch(this.#API_URL,
                 {
@@ -64,13 +64,13 @@ export class BackendCallerInstructor {
             const data = await response.json();
             return data;
         } catch (error) {
-            console.error("Error al ingresar intructor:", error);
+            console.error("Error al ingresar clase:", error);
         }
     }
 
-    static async putInstructorByCi(instructorCi, obj) {
+    static async putClaseById(claseId, obj) {
         try {
-            const response = await fetch(`${this.#API_URL}/${instructorCi}`, {
+            const response = await fetch(`${this.#API_URL}/${claseId}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -85,11 +85,10 @@ export class BackendCallerInstructor {
             const data = await response.json();
             return data;
         } catch (error) {
-            console.error("Error al actualizar el instructor:", error);
+            console.error("Error al actualizar la clase:", error);
             return null; 
         }
     }
-    
 }
 
-export default BackendCallerInstructor;
+export default BackendCallerTurno;

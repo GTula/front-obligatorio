@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import '../commonStyles/Card-style.css'
-import BackendCaller from '../../backend-caller/Alumnos';
+import BackendCallerAlumno from '../../backend-caller/Alumnos';
 import { reloadContext } from '../commonContexts/ReloadPageProvider';
 
 function Estudiante(props) {
@@ -18,12 +18,12 @@ function Estudiante(props) {
     });
 
     async function eliminarEstudiante(ci) {
-        await BackendCaller.deleteStudentByCi(ci);
+        await BackendCallerAlumno.deleteStudentByCi(ci);
         setReload(!reload);
     }
 
     async function mostrarDetalles(ci) {
-        const alumno = await BackendCaller.getStudentByCi(ci);
+        const alumno = await BackendCallerAlumno.getStudentByCi(ci);
         if (alumno) {
             setStudentDetails(alumno); 
             setShowModal(true); 

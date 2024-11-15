@@ -1,7 +1,7 @@
-export class BackendCallerInstructor {
-    static #API_URL = 'http://127.0.0.1:5000/api/instructores';
+export class BackendCallerClase {
+    static #API_URL = 'http://127.0.0.1:5000/api/clases';
 
-    static async getAllInstructores() {
+    static async getAllClases() {
         try {
             const response = await fetch(this.#API_URL, { method: "GET" });
 
@@ -12,41 +12,41 @@ export class BackendCallerInstructor {
             const data = await response.json();
             return data;
         } catch (error) {
-            console.error("Error al obtener todos los instructores:", error);
+            console.error("Error al obtener todas las clases:", error);
         }
     }
 
-    static async deleteInstructorByCi(instructorCi) {
+    static async deleteClaseById(claseId) {
         try {
-            const response = await fetch(`${this.#API_URL}/${instructorCi}`, { method: "DELETE" });
+            const response = await fetch(`${this.#API_URL}/${claseId}`, { method: "DELETE" });
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
 
             return { success: true };
         } catch (error) {
-            console.error("Error al eliminar el instructor:", error);
+            console.error("Error al eliminar la clase:", error);
             return { success: false };
         }
     }
 
-    static async getInstructorByCi(instructorCi) {
+    static async getClaseById(claseId) {
         try {
-            const response = await fetch(`${this.#API_URL}/${instructorCi}`, { method: "GET" });
+            const response = await fetch(`${this.#API_URL}/${claseId}`, { method: "GET" });
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
     
             const data = await response.json();
-            return data.instructor; 
+            return data; 
         } catch (error) {
-            console.error("Error al recoger los detalles del intructor:", error);
+            console.error("Error al recoger los detalles de la clase:", error);
             return null;
         }
     }
     
 
-    static async addInstructor(obj) {
+    static async addClase(obj) {
         try {
             const response = await fetch(this.#API_URL,
                 {
@@ -64,13 +64,13 @@ export class BackendCallerInstructor {
             const data = await response.json();
             return data;
         } catch (error) {
-            console.error("Error al ingresar intructor:", error);
+            console.error("Error al ingresar clase:", error);
         }
     }
 
-    static async putInstructorByCi(instructorCi, obj) {
+    static async putClaseById(claseId, obj) {
         try {
-            const response = await fetch(`${this.#API_URL}/${instructorCi}`, {
+            const response = await fetch(`${this.#API_URL}/${claseId}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -85,11 +85,10 @@ export class BackendCallerInstructor {
             const data = await response.json();
             return data;
         } catch (error) {
-            console.error("Error al actualizar el instructor:", error);
+            console.error("Error al actualizar la clase:", error);
             return null; 
         }
     }
-    
 }
 
-export default BackendCallerInstructor;
+export default BackendCallerClase;

@@ -9,6 +9,8 @@ import Login from './pages/Login'
 import AgregarEstudiante from './components/Estudiantes/AgregarEstudiante'
 import AgregarInstructor from './components/Instructores/AgregarInstructor'
 import { ReloadPageProvider } from './components/commonContexts/ReloadPageProvider'
+import ClasePage from './pages/ClasePage'
+import AgregarClase from './components/Clases/AgregarClase'
 
 export const authenticatedContext = createContext()
 
@@ -39,6 +41,12 @@ function App() {
           } />
           <Route path='/' element={
             isAuthenticated ? <Home /> : <Navigate to="/login" />
+          } />
+          <Route path='/clase' element={
+            isAuthenticated ? <ClasePage /> : <Navigate to="/login" />
+          } />
+          <Route path='/agregarClase' element={
+            isAuthenticated ? <AgregarClase /> : <Navigate to="/login" />
           } />
           <Route
             path="/login"

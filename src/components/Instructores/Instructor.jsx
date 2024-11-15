@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import '../commonStyles/Card-style.css';
-import BackendCaller from '../../backend-caller/Instructores';
+import BackendCallerInstructor from '../../backend-caller/Instructores';
 import { reloadContext } from '../commonContexts/ReloadPageProvider';
 
 function Instructor(props) {
@@ -18,12 +18,12 @@ function Instructor(props) {
     });
 
     async function eliminarInstructor(ci) {
-        await BackendCaller.deleteInstructorByCi(ci);
+        await BackendCallerInstructor.deleteInstructorByCi(ci);
         setReload(!reload);
     }
 
     async function mostrarDetalles(ci) {
-        const instructor = await BackendCaller.getInstructorByCi(ci);
+        const instructor = await BackendCallerInstructor.getInstructorByCi(ci);
         if (instructor) {
             setInstructorDetails(instructor); 
             setShowModal(true); 
@@ -31,7 +31,7 @@ function Instructor(props) {
     }
 
     async function modificarInstructor() {
-        await BackendCaller.putInstructorByCi(ci, info);
+        await BackendCallerInstructor.putInstructorByCi(ci, info);
         setReload(!reload);
         setShowNewModal(false);
         mostrarDetalles(ci);
