@@ -1,7 +1,7 @@
-export class BackendCaller {
-    static #API_URL = 'http://localhost:3000/api/tasks';
+export class BackendCallerAlumno {
+    static #API_URL = 'http://127.0.0.1:5000/api/alumnos';
 
-    static async getAllTasks() {
+    static async getAllStudents() {
         try {
             const response = await fetch(this.#API_URL, { method: "GET" });
 
@@ -16,9 +16,9 @@ export class BackendCaller {
         }
     }
 
-    static async deleteTaskById(taskId) {
+    static async deleteStudentByCi(studentCi) {
         try {
-            const response = await fetch(`${this.#API_URL}/${taskId}`, { method: "DELETE" });
+            const response = await fetch(`${this.#API_URL}/${studentCi}`, { method: "DELETE" });
 
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
@@ -26,12 +26,29 @@ export class BackendCaller {
 
             return { success: true };
         } catch (error) {
-            console.error("Error al eliminar la tarea:", error);
+            console.error("Error al eliminar el estudiante:", error);
             return { success: false };
         }
     }
 
-    static async postNewTask(obj) {
+    static async getStudentByCi(studentCi) {
+        try {
+            const response = await fetch(`${this.#API_URL}/${studentCi}`, { method: "GET" });
+    
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+    
+            const data = await response.json();
+            return data.alumnos; 
+        } catch (error) {
+            console.error("Error al recoger los detalles del estudiante:", error);
+            return null;
+        }
+    }
+    
+
+    static async addStudent(obj) {
         try {
             const response = await fetch(this.#API_URL,
                 {
@@ -49,13 +66,13 @@ export class BackendCaller {
             const data = await response.json();
             return data;
         } catch (error) {
-            console.error("Error al crear la tarea:", error);
+            console.error("Error al ingresar estudiante:", error);
         }
     }
 
-    static async putTaskById(taskId, obj) {
+    static async putAlumnoByCi(alumnoCi, obj) {
         try {
-            const response = await fetch(`${this.#API_URL}/${taskId}`,
+            const response = await fetch(`${this.#API_URL}/${alumnoCi}`,
                 {
                     method: "PUT",
                     headers: {
@@ -72,9 +89,9 @@ export class BackendCaller {
             const data = await response.json();
             return data;
         } catch (error) {
-            console.error("Error al actualizar la tarea:", error);
+            console.error("Error al actualizar el alumno:", error);
         }
     }
 }
 
-export default BackendCaller;
+export default BackendCallerAlumno;
