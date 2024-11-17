@@ -11,13 +11,21 @@ function Student() {
 
     const [reload, setReload] = useContext(reloadContext)
 
+    const [loading, setLoading] = useState(false);
 
     async function fetchStudents() {
-        const response = await BackendCallerAlumno.getAllStudents();
-
-        if (response) { 
-            setStudents(response.alumnos);
-
+        setLoading(true); 
+        try{
+            const response = await BackendCallerAlumno.getAllStudents();
+            if (response) { 
+                setStudents(response.alumnos);
+            }
+        }
+        catch (err) {
+            alert('Error al conectar con el servidor');
+        }
+        finally {
+            setLoading(false); 
         }
     }
 
@@ -42,6 +50,14 @@ function Student() {
                         />
                     ))}
                 </div>
+                {loading && (
+                <div class="loading-modal">
+                    <div class="loading-content">
+                        <div class="loading-spinner"></div>
+                        <p class="loading-text">Cargando...</p>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

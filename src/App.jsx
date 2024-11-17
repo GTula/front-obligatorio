@@ -11,6 +11,10 @@ import AgregarInstructor from './components/Instructores/AgregarInstructor'
 import { ReloadPageProvider } from './components/commonContexts/ReloadPageProvider'
 import ClasePage from './pages/ClasePage'
 import AgregarClase from './components/Clases/AgregarClase'
+import Turnos from './pages/Turnos'
+import AgregarTurno from './components/Turnos/AgregarTurno'
+import AgregarActividad from './components/Actividades/AgregarActividad'
+import ActividadPage from './pages/ActividadPage'
 
 export const authenticatedContext = createContext()
 
@@ -48,6 +52,19 @@ function App() {
           <Route path='/agregarClase' element={
             isAuthenticated ? <AgregarClase /> : <Navigate to="/login" />
           } />
+          <Route path='/turno' element={
+            isAuthenticated ? <Turnos /> : <Navigate to="/login" />
+          } />
+          <Route path='/agregarTurno' element={
+            isAuthenticated ? <AgregarTurno /> : <Navigate to="/login" />
+          } />
+          <Route path='/actividad' element={
+            isAuthenticated ? <ActividadPage /> : <Navigate to="/login" />
+          } />
+          <Route path='/agregarActividad' element={
+            isAuthenticated ? <AgregarActividad /> : <Navigate to="/login" />
+          } />
+          
           <Route
             path="/login"
             element={<Login setIsAuthenticated={setIsAuthenticated} />}

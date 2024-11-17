@@ -6,7 +6,7 @@ function Home(){
     const HandlerInstructor = () =>{
         navigate('/instructor')
     }
-    const HandlerShift = () =>{
+    const HandlerTurno = () =>{
         navigate('/turno')
     }
     const HandlerStudent = () =>{
@@ -15,16 +15,19 @@ function Home(){
     const HandlerClass = () =>{
         navigate('/clase')
     }
+    const HandlerActividad = () =>{
+        navigate('/actividad')
+    }
     return(
         <div>
             <h1>Menu</h1>
             <h3>Deportes de nieve</h3>
             <div className="opciones-menu">
                 <button onClick={HandlerInstructor}>Modificar instructor</button>
-                <button onClick={HandlerShift}>Modificar Turno</button>
+                <button onClick={HandlerTurno}>Modificar Turno</button>
                 <button onClick={HandlerStudent}>Modificar Alumno</button>
                 <button onClick={HandlerClass}>Clases</button>
-
+                <button onClick={HandlerActividad}>Actividades</button>
             </div>
         </div>
     )

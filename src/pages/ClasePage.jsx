@@ -11,13 +11,23 @@ function ClasePage() {
 
     const [reload, setReload] = useContext(reloadContext)
 
+    const [loading, setLoading] = useState(false);
+
 
     async function fetchClases() {
-        const response = await BackendCaller.getAllClases();
-        console.log(response)
-        if (response) { 
-            setClases(response);
-
+        setLoading(true); 
+        try{
+            const response = await BackendCaller.getAllClases();
+            if (response) { 
+                setClases(response);
+    
+            }
+        }
+        catch (err) {
+            alert('Error al conectar con el servidor');
+        }
+        finally {
+            setLoading(false); 
         }
     }
 
@@ -44,6 +54,14 @@ function ClasePage() {
                         />                    
                     ))}
                 </div>
+                {loading && (
+                <div class="loading-modal">
+                    <div class="loading-content">
+                        <div class="loading-spinner"></div>
+                        <p class="loading-text">Cargando...</p>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

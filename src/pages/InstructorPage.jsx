@@ -11,11 +11,21 @@ function InstructorPage() {
 
     const [reload, setReload] = useContext(reloadContext)
 
+    const [loading, setLoading] = useState(false);
+
     async function fetchInstructores() {
-        const response = await BackendCallerInstructor.getAllInstructores();
-        if (response) { 
-            setInstructores(response.instructores);
-            console.log(response)
+        setLoading(true); 
+        try{
+            const response = await BackendCallerInstructor.getAllInstructores();
+            if (response) { 
+                setInstructores(response.instructores);
+            }
+        }
+        catch (err) {
+            alert('Error al conectar con el servidor');
+        }
+        finally {
+            setLoading(false); 
         }
     }
 
@@ -40,6 +50,14 @@ function InstructorPage() {
                         />
                     ))}
                 </div>
+                {loading && (
+                <div class="loading-modal">
+                    <div class="loading-content">
+                        <div class="loading-spinner"></div>
+                        <p class="loading-text">Cargando...</p>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

@@ -11,6 +11,7 @@ function Estudiante(props) {
     const [studentDetails, setStudentDetails] = useState(null);
 
     const [reload, setReload] = useContext(reloadContext)
+    const [loading, setLoading] = useState(false);
 
     const [info, setInfo] = useState({
         nombre: nombre || '',
@@ -18,15 +19,33 @@ function Estudiante(props) {
     });
 
     async function eliminarEstudiante(ci) {
-        await BackendCallerAlumno.deleteStudentByCi(ci);
-        setReload(!reload);
+        setLoading(true);
+        try{
+            await BackendCallerAlumno.deleteStudentByCi(ci);
+            setReload(!reload);
+        }
+        catch (err) {
+            alert('Error al conectar con el servidor');
+        }
+        finally {
+            setLoading(false); 
+        }
     }
 
     async function mostrarDetalles(ci) {
-        const alumno = await BackendCallerAlumno.getStudentByCi(ci);
-        if (alumno) {
-            setStudentDetails(alumno); 
-            setShowModal(true); 
+        setLoading(true);
+        try{
+            const alumno = await BackendCallerAlumno.getStudentByCi(ci);
+            if (alumno) {
+                setStudentDetails(alumno); 
+                setShowModal(true); 
+            }
+        }
+        catch (err) {
+            alert('Error al conectar con el servidor');
+        }
+        finally {
+            setLoading(false); 
         }
     }
     
@@ -38,7 +57,7 @@ function Estudiante(props) {
     }
 
     async function modificarAlumno() {
-        await BackendCaller.putAlumnoByCi(ci, info);
+        await BackendCallerAlumno.putAlumnoByCi(ci, info);
         setReload(!reload);
         setShowNewModal(false);
         mostrarDetalles(ci);
@@ -104,6 +123,14 @@ function Estudiante(props) {
                         />
                         <button onClick={modificarAlumno}>Guardar</button>
                         <button onClick={cerrarModal}>Cancelar</button>
+                    </div>
+                </div>
+            )}
+            {loading && (
+                <div class="loading-modal">
+                    <div class="loading-content">
+                        <div class="loading-spinner"></div>
+                        <p class="loading-text">Cargando...</p>
                     </div>
                 </div>
             )}
