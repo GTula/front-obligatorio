@@ -2,16 +2,18 @@ import React, { useContext, useState } from 'react';
 import '../commonStyles/Card-style.css'
 import BackendCallerAlumno from '../../backend-caller/Alumnos';
 import { reloadContext } from '../commonContexts/ReloadPageProvider';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function Estudiante(props) {
     const { nombre, ci, fecha_nacimiento, apellido } = props;
+    const navigate = useNavigate();
 
     const [showModal, setShowModal] = useState(false);
     const [showNewModal, setShowNewModal] = useState(false);
     const [studentDetails, setStudentDetails] = useState(null);
 
     const [reload, setReload] = useContext(reloadContext)
-    const [loading, setLoading] = useState(false);
 
     const [info, setInfo] = useState({
         nombre: nombre || '',
@@ -19,33 +21,15 @@ function Estudiante(props) {
     });
 
     async function eliminarEstudiante(ci) {
-        setLoading(true);
-        try{
-            await BackendCallerAlumno.deleteStudentByCi(ci);
-            setReload(!reload);
-        }
-        catch (err) {
-            alert('Error al conectar con el servidor');
-        }
-        finally {
-            setLoading(false); 
-        }
+        await BackendCallerAlumno.deleteStudentByCi(ci);
+        setReload(!reload);
     }
 
     async function mostrarDetalles(ci) {
-        setLoading(true);
-        try{
-            const alumno = await BackendCallerAlumno.getStudentByCi(ci);
-            if (alumno) {
-                setStudentDetails(alumno); 
-                setShowModal(true); 
-            }
-        }
-        catch (err) {
-            alert('Error al conectar con el servidor');
-        }
-        finally {
-            setLoading(false); 
+        const alumno = await BackendCallerAlumno.getStudentByCi(ci);
+        if (alumno) {
+            setStudentDetails(alumno); 
+            setShowModal(true); 
         }
     }
     
@@ -57,7 +41,7 @@ function Estudiante(props) {
     }
 
     async function modificarAlumno() {
-        await BackendCallerAlumno.putAlumnoByCi(ci, info);
+        await BackendCaller.putAlumnoByCi(ci, info);
         setReload(!reload);
         setShowNewModal(false);
         mostrarDetalles(ci);
@@ -70,6 +54,35 @@ function Estudiante(props) {
             apellido: apellido
         });
     }
+
+    const vincularClase = async () => {
+        const idClase = prompt("Ingrese el ID de la clase a la que desea vincular al estudiante:");
+        const idEquipo = prompt("Ingrese el ID del equipamiento al que desea vincular al estudiante:");
+
+        if (!idClase) {
+            alert("Debe ingresar un ID de clase válido.");
+            return;
+        }
+
+        try {
+            const response = await axios.post('http://127.0.0.1:5000/api/alumno-clase', {
+                ci_alumno: ci,
+                id_clase: idClase,
+                id_equipamiento: idEquipo
+            });
+
+            alert(`Éxito: ${response.data.mensaje}`);
+        } catch (error) {
+            if (error.response) {
+                alert(`Error del servidor: ${error.response.data.error}`);
+            } else {
+                alert("Error al conectar con el servidor.");
+            }
+        }
+    };
+
+    
+
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -98,6 +111,7 @@ function Estudiante(props) {
                         <p><strong>Apellido:</strong> {studentDetails.apellido}</p>
                         <p><strong>Fecha de Nacimiento:</strong> {studentDetails.fecha_nacimiento}</p>
                         <button onClick={cerrarModal}>Cerrar</button>
+                        <button onClick={vincularClase}>Vincular clase</button>
                     </div>
                 </div>
             )}
@@ -123,14 +137,6 @@ function Estudiante(props) {
                         />
                         <button onClick={modificarAlumno}>Guardar</button>
                         <button onClick={cerrarModal}>Cancelar</button>
-                    </div>
-                </div>
-            )}
-            {loading && (
-                <div class="loading-modal">
-                    <div class="loading-content">
-                        <div class="loading-spinner"></div>
-                        <p class="loading-text">Cargando...</p>
                     </div>
                 </div>
             )}

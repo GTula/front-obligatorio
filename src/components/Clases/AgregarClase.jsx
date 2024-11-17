@@ -21,7 +21,6 @@ function AgregarClase() {
     const [actividades, setActividades] = useState([]);
     const [turnos, setTurnos] = useState([]);
 
-    // Fetch data for dropdowns on component mount
     useEffect(() => {
         async function fetchOptions() {
             try {
