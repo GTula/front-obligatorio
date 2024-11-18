@@ -11,6 +11,7 @@ function Instructor(props) {
     const [instructorDetails, setInstructorDetails] = useState(null);
 
     const [reload, setReload] = useContext(reloadContext)
+    const [loading, setLoading] = useState(false);
 
     const [info, setInfo] = useState({
         nombre: nombre || '',
@@ -18,15 +19,40 @@ function Instructor(props) {
     });
 
     async function eliminarInstructor(ci) {
-        await BackendCallerInstructor.deleteInstructorByCi(ci);
-        setReload(!reload);
+        setLoading(true);
+        try {
+            const response = await BackendCallerInstructor.deleteInstructorByCi(ci);
+            
+            if (response && response.mensaje) {
+                alert(response.mensaje); 
+                setReload(!reload);
+            } else if (response) {
+                alert(response); 
+            } else {
+                alert('No se pudo eliminar el turno');
+            }
+        } catch (err) {
+            alert('Error al conectar con el servidor');
+        } finally {
+            setLoading(false); 
+        }
     }
+    
 
     async function mostrarDetalles(ci) {
-        const instructor = await BackendCallerInstructor.getInstructorByCi(ci);
-        if (instructor) {
-            setInstructorDetails(instructor); 
-            setShowModal(true); 
+        setLoading(true);
+        try{
+            const instructor = await BackendCallerInstructor.getInstructorByCi(ci);
+            if (instructor) {
+                setInstructorDetails(instructor); 
+                setShowModal(true); 
+            }
+        }
+        catch (err) {
+            alert('Error al conectar con el servidor');
+        }
+        finally {
+            setLoading(false); 
         }
     }
 
@@ -102,6 +128,14 @@ function Instructor(props) {
                         />
                         <button onClick={modificarInstructor}>Guardar</button>
                         <button onClick={cerrarModal}>Cancelar</button>
+                    </div>
+                </div>
+            )}
+            {loading && (
+                <div class="loading-modal">
+                    <div class="loading-content">
+                        <div class="loading-spinner"></div>
+                        <p class="loading-text">Cargando...</p>
                     </div>
                 </div>
             )}

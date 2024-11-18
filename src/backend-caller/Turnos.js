@@ -19,17 +19,18 @@ export class BackendCallerTurno {
     static async deleteTurnoById(turnoId) {
         try {
             const response = await fetch(`${this.#API_URL}/${turnoId}`, { method: "DELETE" });
+            const data = await response.json();
             if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
+                throw data.error;
             }
-
-            return { success: true };
+            return true;
         } catch (error) {
             console.error("Error al eliminar el turno:", error);
-            return { success: false };
+            return error;
         }
     }
-
+   
+    
     static async getTurnoById(turnoId) {
         try {
             const response = await fetch(`${this.#API_URL}/${turnoId}`, { method: "GET" });
@@ -46,7 +47,7 @@ export class BackendCallerTurno {
     }
     
 
-    static async addClase(obj) {
+    static async addTurno(obj) {
         try {
             const response = await fetch(this.#API_URL,
                 {
@@ -64,13 +65,13 @@ export class BackendCallerTurno {
             const data = await response.json();
             return data;
         } catch (error) {
-            console.error("Error al ingresar clase:", error);
+            console.error("Error al ingresar turno:", error);
         }
     }
 
-    static async putClaseById(claseId, obj) {
+    static async putTurnoById(id, obj) {
         try {
-            const response = await fetch(`${this.#API_URL}/${claseId}`, {
+            const response = await fetch(`${this.#API_URL}/${id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -85,7 +86,7 @@ export class BackendCallerTurno {
             const data = await response.json();
             return data;
         } catch (error) {
-            console.error("Error al actualizar la clase:", error);
+            console.error("Error al actualizar el turno:", error);
             return null; 
         }
     }

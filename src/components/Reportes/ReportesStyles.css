@@ -9,7 +9,6 @@
 }
 
 .titulo {
-    /* centrar */
     justify-content: center;
     align-items: center;
     margin-left: 40px;
@@ -21,7 +20,6 @@
     margin-left: 40px;
 }
 
-/* Estilos para el contenedor principal */
 .login-container {
     width: 100%;
     max-width: 400px;
@@ -33,7 +31,6 @@
     background-color: #fff;
 }
 
-/* Estilos para el formulario */
 h2 {
     text-align: center;
     margin-bottom: 20px;
@@ -84,7 +81,6 @@ button:hover {
     text-align: center;
 }
 
-/* Estilos para el modal de carga */
 .loading-modal {
     position: fixed;
     top: 0;
@@ -135,9 +131,60 @@ button:hover {
 }
 
 .boton-arriba-izquierda {
-    position: absolute; /* Posicionamiento absoluto para colocar en la esquina */
-    top: 20px; /* Ajusta según sea necesario */
-    left: 20px; /* Ajusta según sea necesario */
-    width: auto; /* Puedes ajustar el ancho si no quieres que ocupe todo el espacio */
-    margin-top: 0; /* Elimina el margen superior para que se alinee con la parte superior */
+    position: absolute; 
+    top: 20px; 
+    left: 20px; 
+    width: auto;
+    margin-top: 0; 
+}
+
+.page-container {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.actividades-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin: 20px 40px;
+}
+
+.actividad-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+}
+
+.actividad-card:hover {
+    transform: scale(1.02);
+}
+
+.actividad-index {
+    font-size: 20px;
+    font-weight: bold;
+    color: #007bff;
+    margin-right: 10px;
+}
+
+.actividad-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.actividad-nombre {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+
+.actividad-ingresos {
+    font-size: 16px;
+    color: #555;
 }

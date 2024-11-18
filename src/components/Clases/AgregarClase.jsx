@@ -20,10 +20,11 @@ function AgregarClase() {
     const [instructores, setInstructores] = useState([]);
     const [actividades, setActividades] = useState([]);
     const [turnos, setTurnos] = useState([]);
+    const [loading, setLoading] = useState(false);
 
-    // Fetch data for dropdowns on component mount
     useEffect(() => {
         async function fetchOptions() {
+            setLoading(true);
             try {
                 const instructoresResponse = await BackendCallerInstructor.getAllInstructores();
                 const actividadesResponse = await BackendCallerActividad.getAllActividades();
@@ -43,14 +44,26 @@ function AgregarClase() {
                 setActividades([]);
                 setTurnos([]);
             }
+            finally {
+                setLoading(false); 
+            }
         }
         fetchOptions();
     }, []);
     
 
     async function postClase(info) {
-        await BackendCallerClase.addClase(info);
-        navigate('/clase');
+        setLoading(true);
+        try{
+            await BackendCallerClase.addClase(info);
+            navigate('/clase');
+        }
+        catch (err) {
+            alert('Error al conectar con el servidor');
+        }
+        finally {
+            setLoading(false); 
+        }
     }
 
     const handleInputChange = (e) => {
@@ -112,6 +125,14 @@ function AgregarClase() {
                 />
             </div>
             <button className='boton-agregar' onClick={() => postClase(info)}>AGREGAR CLASE</button>
+            {loading && (
+                <div class="loading-modal">
+                    <div class="loading-content">
+                        <div class="loading-spinner"></div>
+                        <p class="loading-text">Cargando...</p>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

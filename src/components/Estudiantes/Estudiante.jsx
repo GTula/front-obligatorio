@@ -4,6 +4,8 @@ import BackendCallerAlumno from '../../backend-caller/Alumnos';
 import { reloadContext } from '../commonContexts/ReloadPageProvider';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function Estudiante(props) {
     const { nombre, ci, fecha_nacimiento, apellido } = props;
@@ -14,6 +16,7 @@ function Estudiante(props) {
     const [studentDetails, setStudentDetails] = useState(null);
 
     const [reload, setReload] = useContext(reloadContext)
+    const [loading, setLoading] = useState(false);
 
     const [info, setInfo] = useState({
         nombre: nombre || '',
@@ -21,15 +24,33 @@ function Estudiante(props) {
     });
 
     async function eliminarEstudiante(ci) {
-        await BackendCallerAlumno.deleteStudentByCi(ci);
-        setReload(!reload);
+        setLoading(true);
+        try{
+            await BackendCallerAlumno.deleteStudentByCi(ci);
+            setReload(!reload);
+        }
+        catch (err) {
+            alert('Error al conectar con el servidor');
+        }
+        finally {
+            setLoading(false); 
+        }
     }
 
     async function mostrarDetalles(ci) {
-        const alumno = await BackendCallerAlumno.getStudentByCi(ci);
-        if (alumno) {
-            setStudentDetails(alumno); 
-            setShowModal(true); 
+        setLoading(true);
+        try{
+            const alumno = await BackendCallerAlumno.getStudentByCi(ci);
+            if (alumno) {
+                setStudentDetails(alumno); 
+                setShowModal(true); 
+            }
+        }
+        catch (err) {
+            alert('Error al conectar con el servidor');
+        }
+        finally {
+            setLoading(false); 
         }
     }
     
@@ -41,13 +62,23 @@ function Estudiante(props) {
     }
 
     async function modificarAlumno() {
-        await BackendCaller.putAlumnoByCi(ci, info);
-        setReload(!reload);
-        setShowNewModal(false);
-        mostrarDetalles(ci);
+        setLoading(true);
+        try{
+            await BackendCaller.putAlumnoByCi(ci, info);
+            setReload(!reload);
+            setShowNewModal(false);
+            mostrarDetalles(ci);
+        }
+        catch (err) {
+            alert('Error al conectar con el servidor');
+        }
+        finally {
+            setLoading(false); 
+        }
     }
 
     function abrirNewModal() {
+        setLoading(true);
         setShowNewModal(true);
         setInfo({
             nombre: nombre,
@@ -55,15 +86,15 @@ function Estudiante(props) {
         });
     }
 
-    const vincularActividad = async () => {
+    const vincularClase = async () => {
         const idClase = prompt("Ingrese el ID de la clase a la que desea vincular al estudiante:");
-        const idEquipo = prompt("Ingrese el ID del equipo al que desea vincular al estudiante:");
+        const idEquipo = prompt("Ingrese el ID del equipamiento al que desea vincular al estudiante:");
 
         if (!idClase) {
             alert("Debe ingresar un ID de clase válido.");
             return;
         }
-
+        setLoading(true);
         try {
             const response = await axios.post('http://127.0.0.1:5000/api/alumno-clase', {
                 ci_alumno: ci,
@@ -78,6 +109,9 @@ function Estudiante(props) {
             } else {
                 alert("Error al conectar con el servidor.");
             }
+        }
+        finally {
+            setLoading(false); 
         }
     };
 
@@ -111,7 +145,7 @@ function Estudiante(props) {
                         <p><strong>Apellido:</strong> {studentDetails.apellido}</p>
                         <p><strong>Fecha de Nacimiento:</strong> {studentDetails.fecha_nacimiento}</p>
                         <button onClick={cerrarModal}>Cerrar</button>
-                        <button onClick={vincularActividad}>Vincular actividad</button>
+                        <button onClick={vincularClase}>Vincular clase</button>
                     </div>
                 </div>
             )}
@@ -137,6 +171,14 @@ function Estudiante(props) {
                         />
                         <button onClick={modificarAlumno}>Guardar</button>
                         <button onClick={cerrarModal}>Cancelar</button>
+                    </div>
+                </div>
+            )}
+            {loading && (
+                <div class="loading-modal">
+                    <div class="loading-content">
+                        <div class="loading-spinner"></div>
+                        <p class="loading-text">Cargando...</p>
                     </div>
                 </div>
             )}

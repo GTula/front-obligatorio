@@ -5,13 +5,23 @@ import BackendCallerAlumno from '../../backend-caller/Alumnos';
 import '../commonStyles/agregarPersona.css'
 
 function AgregarEstudiante() {
+    const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
 
 
     async function postEstudiante(info) {
-        navigate('/estudiante')
-        await BackendCallerAlumno.addStudent(info);
+        setLoading(true);
+        try{
+            navigate('/estudiante')
+            await BackendCallerAlumno.addStudent(info);
+        }
+        catch (err) {
+            alert('Error al conectar con el servidor');
+        }
+        finally {
+            setLoading(false); 
+        }
     }
 
     const [info, setInfo] = useState({
@@ -62,6 +72,14 @@ function AgregarEstudiante() {
                 />
             </div>
             <button className='boton-agregar' onClick={() => postEstudiante(info)}>AGREGAR ESTUDIANTE</button>
+            {loading && (
+                <div class="loading-modal">
+                    <div class="loading-content">
+                        <div class="loading-spinner"></div>
+                        <p class="loading-text">Cargando...</p>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

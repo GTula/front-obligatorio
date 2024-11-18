@@ -11,11 +11,21 @@ function InstructorPage() {
 
     const [reload, setReload] = useContext(reloadContext)
 
+    const [loading, setLoading] = useState(false);
+
     async function fetchInstructores() {
-        const response = await BackendCallerInstructor.getAllInstructores();
-        if (response) { 
-            setInstructores(response.instructores);
-            console.log(response)
+        setLoading(true); 
+        try{
+            const response = await BackendCallerInstructor.getAllInstructores();
+            if (response) { 
+                setInstructores(response.instructores);
+            }
+        }
+        catch (err) {
+            alert('Error al conectar con el servidor');
+        }
+        finally {
+            setLoading(false); 
         }
     }
     const navigate = useNavigate();
@@ -29,6 +39,9 @@ function InstructorPage() {
 
     return (
         <div >
+            <Link to="/">
+                <button className="boton-arriba-izquierda">🏠 Ir a Home</button>
+            </Link>
                 <h1 className='titulo'>Lista de instructores</h1>
                 <Link to={"/AgregarInstructor"}>
                 <button className='botonAgregar'>Agregar instructor</button>
@@ -44,6 +57,14 @@ function InstructorPage() {
                         />
                     ))}
                 </div>
+                {loading && (
+                <div class="loading-modal">
+                    <div class="loading-content">
+                        <div class="loading-spinner"></div>
+                        <p class="loading-text">Cargando...</p>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

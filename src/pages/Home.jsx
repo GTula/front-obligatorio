@@ -7,7 +7,7 @@ function Home(){
     const HandlerInstructor = () =>{
         navigate('/instructor')
     }
-    const HandlerShift = () =>{
+    const HandlerTurno = () =>{
         navigate('/turno')
     }
     const HandlerStudent = () =>{
@@ -16,15 +16,23 @@ function Home(){
     const HandlerClass = () =>{
         navigate('/clase')
     }
+    const HandlerActividad = () =>{
+        navigate('/actividad')
+    }
+    const HandlerReportes = () =>{
+        navigate('/reportes')
+    }
     return(
         <div>
             <h1>Menu</h1>
             <h3>Deportes de nieve</h3>
             <div className="opciones-menu">
-                <button className="boton-opciones-menu" onClick={HandlerInstructor}>Modificar instructor</button>
-                <button className="boton-opciones-menu" onClick={HandlerShift}>Modificar Turno</button>
-                <button className="boton-opciones-menu" onClick={HandlerStudent}>Modificar Alumno</button>
-                <button className="boton-opciones-menu" onClick={HandlerClass}>Clases</button>
+                <button onClick={HandlerInstructor}>Modificar instructor</button>
+                <button onClick={HandlerTurno}>Modificar Turno</button>
+                <button onClick={HandlerStudent}>Modificar Alumno</button>
+                <button onClick={HandlerClass}>Clases</button>
+                <button onClick={HandlerActividad}>Actividades</button>
+                <button onClick={HandlerReportes}>Reportes</button>
 
             </div>
         </div>

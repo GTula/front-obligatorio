@@ -1,19 +1,23 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import BackendCallerInstructor from '../../backend-caller/Instructores';
+import BackendCallerTurno from '../../backend-caller/Turnos';
 import '../commonStyles/agregarPersona.css'
+import { reloadContext } from '../commonContexts/ReloadPageProvider';
 
-function AgregarInstructor() {
-    const [loading, setLoading] = useState(false);
+function AgregarTurno() {
 
     const navigate = useNavigate();
+    const [reload, setReload] = useContext(reloadContext);
+    const [loading, setLoading] = useState(false);
 
 
-    async function postInstructor(info) {
+    async function postTurno(info) {
         setLoading(true);
         try{
-            navigate('/instructor')
-            await BackendCallerInstructor.addInstructor(info);
+            navigate('/turno')
+            await BackendCallerTurno.addTurno(info);
+            setReload(!reload)
         }
         catch (err) {
             alert('Error al conectar con el servidor');
@@ -24,9 +28,8 @@ function AgregarInstructor() {
     }
 
     const [info, setInfo] = useState({
-        ci: '',
-        nombre: '',
-        apellido: '',
+        hora_inicio: '',
+        hora_final: '',
     });
 
     const handleInputChange = (e) => {
@@ -37,32 +40,30 @@ function AgregarInstructor() {
         });
     };
 
+    const cancelarAgregar = () =>{
+        navigate('/turno')
+    }
+
     return (
         <div className='agregar-container'>
             <div className='container-inputs'>
                 <input
-                    type="text"
-                    name="ci"
-                    placeholder="CI del instructor"
-                    value={info.ci}
+                    type="time"
+                    name="hora_inicio"
+                    value={info.hora_inicio}
                     onChange={handleInputChange}
                 />
                 <input
-                    type="text"
-                    name="nombre"
-                    placeholder="Nombre"
-                    value={info.nombre}
+                    type="time"
+                    name="hora_final"
+                    value={info.hora_final}
                     onChange={handleInputChange}
                 />
-                <input
-                    type="text"
-                    name="apellido"
-                    placeholder="Apellido"
-                    value={info.apellido}
-                    onChange={handleInputChange}
-                />
+                
             </div>
-            <button className='boton-agregar' onClick={() => postInstructor(info)}>AGREGAR INSTRUCTOR</button>
+            <button className='boton-agregar' onClick={() => postTurno(info)}>AGREGAR TURNO</button>
+            <button className='boton-agregar' onClick={cancelarAgregar}>CANCELAR</button>
+
             {loading && (
                 <div class="loading-modal">
                     <div class="loading-content">
@@ -75,4 +76,5 @@ function AgregarInstructor() {
     );
 }
 
-export default AgregarInstructor;
+
+export default AgregarTurno;
