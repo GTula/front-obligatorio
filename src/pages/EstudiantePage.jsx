@@ -35,6 +35,9 @@ function Student() {
 
     return (
         <div >
+            <Link to="/">
+                <button className="boton-arriba-izquierda">🏠 Ir a Home</button>
+            </Link>
                 <h1 className='titulo'>Lista de estudiantes</h1>
                 <Link to={"/AgregarEstudiante"}>
                 <button className='botonAgregar'>Agregar estudiante</button>

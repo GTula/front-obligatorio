@@ -6,10 +6,12 @@ function Register(){
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
+        setLoading(true); 
         e.preventDefault();
         setError('');
         try {
@@ -28,6 +30,9 @@ function Register(){
             }
         } catch (err) {
             setError('Error al conectar con el servidor');
+        }
+        finally {
+            setLoading(false); 
         }
     };
 
@@ -54,7 +59,16 @@ function Register(){
             </div>
             <button type="submit">Registrar</button>
         </form>
+        {loading && (
+                <div class="loading-modal">
+                    <div class="loading-content">
+                        <div class="loading-spinner"></div>
+                        <p class="loading-text">Cargando...</p>
+                    </div>
+                </div>
+            )}
         </div>
+        
     );
 }
 

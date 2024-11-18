@@ -64,7 +64,14 @@ export class BackendCallerClase {
             const data = await response.json();
             return data;
         } catch (error) {
-            console.error("Error al ingresar clase:", error);
+            console.error("Error al ingresar clase:", error.message);
+            if (error.message.includes("HTTP error! Status: 400")) {
+                alert("Error: Instructor ya tiene una clase en este turno.");
+            } else {
+                alert("Error al conectar con el servidor o procesar la solicitud.");
+            }
+    
+            throw error;
         }
     }
 
@@ -77,7 +84,7 @@ export class BackendCallerClase {
                 },
                 body: JSON.stringify(obj),
             });
-    
+            
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }

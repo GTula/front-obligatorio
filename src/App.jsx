@@ -15,6 +15,10 @@ import Turnos from './pages/Turnos'
 import AgregarTurno from './components/Turnos/AgregarTurno'
 import AgregarActividad from './components/Actividades/AgregarActividad'
 import ActividadPage from './pages/ActividadPage'
+import Reportes from './pages/ReportesPage'
+import ActividadesAlumnos from './components/Reportes/ActividadesAlumnos'
+import ActividadesIngresos from './components/Reportes/ActividadesIngresos'
+import TurnosDictados from './components/Reportes/TurnosDictados'
 
 export const authenticatedContext = createContext()
 
@@ -63,6 +67,18 @@ function App() {
           } />
           <Route path='/agregarActividad' element={
             isAuthenticated ? <AgregarActividad /> : <Navigate to="/login" />
+          } />
+          <Route path='/reportes' element={
+            isAuthenticated ? <Reportes /> : <Navigate to="/login" />
+          } />
+          <Route path='/actividades-mas-alumnos' element={
+            isAuthenticated ? <ActividadesAlumnos /> : <Navigate to="/login" />
+          } />
+          <Route path='/actividades-mas-ingresos' element={
+            isAuthenticated ? <ActividadesIngresos /> : <Navigate to="/login" />
+          } />
+          <Route path='/turnos-mas-dictados' element={
+            isAuthenticated ? <TurnosDictados /> : <Navigate to="/login" />
           } />
           
           <Route

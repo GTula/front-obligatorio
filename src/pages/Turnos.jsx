@@ -32,6 +32,9 @@ function Turnos() {
 
     return (
         <div>
+            <Link to="/">
+                <button className="boton-arriba-izquierda">🏠 Ir a Home</button>
+            </Link>
             <h1 className="titulo">Lista de turnos</h1>
             <Link to="/AgregarTurno">
                 <button className="botonAgregar">Agregar turno</button>

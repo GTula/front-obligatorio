@@ -33,6 +33,9 @@ function ActividadPage() {
 
     return (
         <div>
+            <Link to="/">
+                <button className="boton-arriba-izquierda">🏠 Ir a Home</button>
+            </Link>
             <h1 className="titulo">Lista de actividades</h1>
             <Link to="/AgregarActividad">
                 <button className="botonAgregar">Agregar actividad</button>

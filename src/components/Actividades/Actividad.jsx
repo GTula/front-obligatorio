@@ -13,16 +13,35 @@ function Actividad(props) {
     });
 
     const [reload, setReload] = useContext(reloadContext);
+    const [loading, setLoading] = useState(false);
 
     async function eliminarActividad(id) {
-        await BackendCallerActividad.deleteActividadById(id);
-        setReload(!reload);
+        setLoading(true);
+        try{
+            await BackendCallerActividad.deleteActividadById(id);
+            setReload(!reload);
+        }
+        catch (err) {
+            alert('Error al conectar con el servidor');
+        }
+        finally {
+            setLoading(false); 
+        }
     }
 
     async function modificarActividad() {
-        await BackendCallerActividad.putActividadById(id, info);
-        setReload(!reload);
-        setShowNewModal(false);
+        setLoading(true);
+        try{
+            await BackendCallerActividad.putActividadById(id, info);
+            setReload(!reload);
+            setShowNewModal(false);
+        }
+        catch (err) {
+            alert('Error al conectar con el servidor');
+        }
+        finally {
+            setLoading(false); 
+        }
     }
 
     function abrirNewModal() {
@@ -77,6 +96,14 @@ function Actividad(props) {
                         </label><br/>
                         <button onClick={modificarActividad}>Guardar</button>
                         <button onClick={cerrarModal}>Cancelar</button>
+                    </div>
+                </div>
+            )}
+            {loading && (
+                <div className="loading-modal">
+                    <div className="loading-content">
+                        <div className="loading-spinner"></div>
+                        <p className="loading-text">Cargando...</p>
                     </div>
                 </div>
             )}

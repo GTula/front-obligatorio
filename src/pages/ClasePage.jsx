@@ -37,6 +37,9 @@ function ClasePage() {
 
     return (
         <div >
+            <Link to="/">
+                <button className="boton-arriba-izquierda">🏠 Ir a Home</button>
+            </Link>
                 <h1 className='titulo'>Lista de clases</h1>
                 <Link to={"/AgregarClase"}>
                 <button className='botonAgregar'>Agregar clase</button>

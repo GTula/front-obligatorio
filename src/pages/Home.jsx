@@ -18,6 +18,9 @@ function Home(){
     const HandlerActividad = () =>{
         navigate('/actividad')
     }
+    const HandlerReportes = () =>{
+        navigate('/reportes')
+    }
     return(
         <div>
             <h1>Menu</h1>
@@ -28,6 +31,8 @@ function Home(){
                 <button onClick={HandlerStudent}>Modificar Alumno</button>
                 <button onClick={HandlerClass}>Clases</button>
                 <button onClick={HandlerActividad}>Actividades</button>
+                <button onClick={HandlerReportes}>Reportes</button>
+
             </div>
         </div>
     )
