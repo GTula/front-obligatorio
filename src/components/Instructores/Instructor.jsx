@@ -20,17 +20,24 @@ function Instructor(props) {
 
     async function eliminarInstructor(ci) {
         setLoading(true);
-        try{
-            await BackendCallerInstructor.deleteInstructorByCi(ci);
-            setReload(!reload);
-        }
-        catch (err) {
+        try {
+            const response = await BackendCallerInstructor.deleteInstructorByCi(ci);
+            
+            if (response && response.mensaje) {
+                alert(response.mensaje); 
+                setReload(!reload);
+            } else if (response) {
+                alert(response); 
+            } else {
+                alert('No se pudo eliminar el turno');
+            }
+        } catch (err) {
             alert('Error al conectar con el servidor');
-        }
-        finally {
+        } finally {
             setLoading(false); 
         }
     }
+    
 
     async function mostrarDetalles(ci) {
         setLoading(true);

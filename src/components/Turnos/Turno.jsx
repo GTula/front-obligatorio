@@ -17,18 +17,25 @@ function Turno(props) {
 
     async function eliminarTurno(id) {
         setLoading(true); 
-        try{
-            await BackendCallerTurno.deleteTurnoById(id);
-            setReload(!reload);
-        }
-        catch (err) {
+        try {
+            const response = await BackendCallerTurno.deleteTurnoById(id);
+            
+            if (response && response.mensaje) {
+                alert(response.mensaje); 
+                setReload(!reload);
+            } else if (response) {
+                alert(response); 
+            } else {
+                alert('No se pudo eliminar el turno');
+            }
+        } catch (err) {
             alert('Error al conectar con el servidor');
-        }
-        finally {
+        } finally {
             setLoading(false); 
         }
     }
-
+    
+    
     async function modificarTurno() {
         setLoading(true);
         try{

@@ -69,7 +69,6 @@ function Actividad(props) {
             <h2>{`Descripcion: ${nombre}, Costo: ${costo}`}</h2>
             <div className="card-options">
                 <button className="boton-card" onClick={abrirNewModal}>Modificar</button>
-                <button className="boton-card" onClick={() => eliminarActividad(id)}>Eliminar</button>
             </div>
 
             {showNewModal && (

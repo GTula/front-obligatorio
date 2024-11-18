@@ -19,16 +19,18 @@ export class BackendCallerInstructor {
     static async deleteInstructorByCi(instructorCi) {
         try {
             const response = await fetch(`${this.#API_URL}/${instructorCi}`, { method: "DELETE" });
+            const data = await response.json();
             if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
+                throw data.error;
             }
 
             return { success: true };
         } catch (error) {
             console.error("Error al eliminar el instructor:", error);
-            return { success: false };
+            return error;
         }
     }
+
 
     static async getInstructorByCi(instructorCi) {
         try {

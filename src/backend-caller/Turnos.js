@@ -19,17 +19,18 @@ export class BackendCallerTurno {
     static async deleteTurnoById(turnoId) {
         try {
             const response = await fetch(`${this.#API_URL}/${turnoId}`, { method: "DELETE" });
+            const data = await response.json();
             if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
+                throw data.error;
             }
-
-            return { success: true };
+            return true;
         } catch (error) {
             console.error("Error al eliminar el turno:", error);
-            return { success: false };
+            return error;
         }
     }
-
+   
+    
     static async getTurnoById(turnoId) {
         try {
             const response = await fetch(`${this.#API_URL}/${turnoId}`, { method: "GET" });
