@@ -4,6 +4,8 @@ import BackendCallerAlumno from '../../backend-caller/Alumnos';
 import { reloadContext } from '../commonContexts/ReloadPageProvider';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function Estudiante(props) {
     const { nombre, ci, fecha_nacimiento, apellido } = props;

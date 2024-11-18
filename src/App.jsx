@@ -47,6 +47,7 @@ function App() {
           <Route path='/estudiante' element={
             isAuthenticated ? <Student /> : <Navigate to="/login" />
           } />
+
           <Route path='/' element={
             isAuthenticated ? <Home /> : <Navigate to="/login" />
           } />
