@@ -23,7 +23,7 @@ export class BackendCallerTurno {
             if (!response.ok) {
                 throw data.error;
             }
-            return true;
+            return null;
         } catch (error) {
             console.error("Error al eliminar el turno:", error);
             return error;

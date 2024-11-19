@@ -29,13 +29,14 @@ function Instructor(props) {
             } else if (response) {
                 alert(response); 
             } else {
-                alert('No se pudo eliminar el turno');
+                alert('Instructor eliminado correctamente');
             }
         } catch (err) {
             alert('Error al conectar con el servidor');
         } finally {
             setLoading(false); 
         }
+        setReload(!reload)
     }
     
 

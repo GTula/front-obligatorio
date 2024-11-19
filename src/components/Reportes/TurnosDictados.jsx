@@ -39,8 +39,8 @@ function TurnosDictados(){
                         <p className="actividad-index">{index + 1}.</p>
                         <div className="actividad-info">
                         <p className="actividad-nombre">TURNO: </p>
-                            <p className="actividad-nombre">Hora de inicio: {turno.inicio}</p>
-                            <p className="actividad-nombre">Hora de fin: {turno.inicio}</p>
+                            <p className="actividad-nombre">Hora de inicio: {turno.inicio.substring(0, 5)}</p>
+                            <p className="actividad-nombre">Hora de fin: {turno.fin.substring(0, 5)}</p>
                             <p className="actividad-ingresos">Cantidad de clases: {turno.clases_totales}</p>
                         </div>
                     </div>

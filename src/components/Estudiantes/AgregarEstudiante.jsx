@@ -1,11 +1,13 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import BackendCallerAlumno from '../../backend-caller/Alumnos';
 import '../commonStyles/agregarPersona.css'
+import { reloadContext } from '../commonContexts/ReloadPageProvider';
 
 function AgregarEstudiante() {
     const [loading, setLoading] = useState(false);
+    const [reload, setReload] = useContext(reloadContext)
 
     const navigate = useNavigate();
 
@@ -22,6 +24,7 @@ function AgregarEstudiante() {
         finally {
             setLoading(false); 
         }
+        setReload(!reload)
     }
 
     const [info, setInfo] = useState({
