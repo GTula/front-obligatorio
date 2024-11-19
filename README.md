@@ -1,8 +1,15 @@
-# React + Vite
+• Instructivo completo para correr la aplicación de forma local
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Clonar el repositorio
+- Abre una terminal y ejecuta:
+git clone https://github.com/GTula/front-obligatorio.git
+- Cambia al directorio del proyecto:
+cd front-obligatorio
 
-Currently, two official plugins are available:
+Instalar dependencias
+- En la terminal, asegúrate de estar en el directorio del proyecto. Ejecuta:
+npm install
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Correr la aplicación
+- Ejecuta el servidor de desarrollo:
+npm start
