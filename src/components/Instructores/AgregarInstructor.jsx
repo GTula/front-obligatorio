@@ -1,10 +1,12 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { useNavigate } from 'react-router-dom';
 import BackendCallerInstructor from '../../backend-caller/Instructores';
 import '../commonStyles/agregarPersona.css'
+import { reloadContext } from '../commonContexts/ReloadPageProvider';
 
 function AgregarInstructor() {
     const [loading, setLoading] = useState(false);
+    const [reload, setReload] = useContext(reloadContext)
 
     const navigate = useNavigate();
 
@@ -21,6 +23,7 @@ function AgregarInstructor() {
         finally {
             setLoading(false); 
         }
+        setReload(!reload)
     }
 
     const [info, setInfo] = useState({

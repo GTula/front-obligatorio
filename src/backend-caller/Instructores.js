@@ -24,7 +24,7 @@ export class BackendCallerInstructor {
                 throw data.error;
             }
 
-            return { success: true };
+            return null;
         } catch (error) {
             console.error("Error al eliminar el instructor:", error);
             return error;

@@ -22,17 +22,17 @@ function Turno(props) {
             
             if (response && response.mensaje) {
                 alert(response.mensaje); 
-                setReload(!reload);
             } else if (response) {
                 alert(response); 
             } else {
-                alert('No se pudo eliminar el turno');
+                alert('El turno ha sido eliminado');
             }
         } catch (err) {
             alert('Error al conectar con el servidor');
         } finally {
             setLoading(false); 
         }
+        setReload(!reload);
     }
     
     

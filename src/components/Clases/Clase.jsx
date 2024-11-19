@@ -131,11 +131,10 @@ function Clase(props) {
                 {id && actividad && <h2>{actividad}</h2>}
                 <h2>{"Id: " + id}</h2>
                 <div className='card-options'>
-                    <button className='boton-card' onClick={() => mostrarDetalles(id)}>Detalles</button>
-                    {/* <button className='boton-card' onClick={abrirNewModal}>Modificar</button> */}
-                    <button className='boton-card' onClick={() => eliminarEstudiante(ci)}>Eliminar</button>
-                </div> 
-                
+                    <button className='boton-card' onClick={mostrarDetalles}>Detalles</button>
+                    <button className='boton-card' onClick={mostrarEditModal}>Modificar</button>
+                    <button className='boton-card' onClick={verAlumnos}>Ver alumnos</button>
+                </div>
             </div>
 
             {/* Modal de detalles */}
@@ -152,8 +151,85 @@ function Clase(props) {
                     </div>
                 </div>
             )}
+
+            {/* Modal de alumnos */}
+            {showModal2 && (
+                <div className='modal-overlay'>
+                    <div className='modal'>
+                        <h2>Alumnos inscritos</h2>
+                        {isLoading ? (
+                            <p>Cargando...</p>
+                        ) : error ? (
+                            <p>{error}</p>
+                        ) : alumnos.length > 0 ? (
+                            <ul>
+                                {alumnos.map((alumno) => (
+                                    <li key={alumno.ci}>
+                                        <strong>CI:</strong> {alumno.ci}, <strong>Nombre:</strong> {alumno.nombre}, <strong>Apellido:</strong> {alumno.apellido}, <strong>Equipamiento:</strong> {alumno.id_equipamiento}
+                                        <button onClick={() => quitarAlumno(alumno.ci)}>Quitar</button>
+                                    </li>
+                                ))}
+                            </ul>
+                        ) : (
+                            <p>No hay alumnos inscritos en esta clase.</p>
+                        )}
+                        <button onClick={cerrarModal2}>Cerrar</button>
+                    </div>
+                </div>
+            )}
+
+            {/* Modal de modificar */}
+            {showEditModal && (
+                <div className='modal-overlay'>
+                    <div className='modal'>
+                        <h2>Modificar Clase</h2>
+                        <div className='container-inputs'>
+                            <select name="ci_instructor" value={info.ci_instructor} onChange={handleInputChange}>
+                                <option value="">Seleccione un instructor</option>
+                                {instructores.map((instructor) => (
+                                    <option key={instructor.ci} value={instructor.ci}>
+                                        {instructor.nombre} {instructor.apellido}
+                                    </option>
+                                ))}
+                            </select>
+
+                            <select name="id_actividad" value={info.id_actividad} onChange={handleInputChange}>
+                                <option value="">Seleccione una actividad</option>
+                                {actividades.map((actividad) => (
+                                    <option key={actividad.id} value={actividad.id}>
+                                        {actividad.nombre}
+                                    </option>
+                                ))}
+                            </select>
+
+                            <select name="id_turno" value={info.id_turno} onChange={handleInputChange}>
+                                <option value="">Seleccione un turno</option>
+                                {turnos.map((turno) => (
+                                    <option key={turno.id} value={turno.id}>
+                                        {turno.hora_inicio} - {turno.hora_final}
+                                    </option>
+                                ))}
+                            </select>
+
+                            <input type="date" name="dictada" value={info.dictada} onChange={handleInputChange} />
+                        </div>
+                        <button className='boton-agregar' onClick={modificarClase}>Guardar Cambios</button>
+                        <button className='boton-cancelar' onClick={cerrarEditModal}>Cancelar</button>
+                    </div>
+                </div>
+            )}
+            {loading && (
+                <div class="loading-modal">
+                    <div class="loading-content">
+                        <div class="loading-spinner"></div>
+                        <p class="loading-text">Cargando...</p>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
 
 export default Clase;
+
+
