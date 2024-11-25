@@ -28,10 +28,6 @@ function InstructorPage() {
             setLoading(false); 
         }
     }
-    const navigate = useNavigate();
-    const handleBack = () => {
-        navigate('/');
-    }
 
     useEffect(() => {
         fetchInstructores();
@@ -46,7 +42,6 @@ function InstructorPage() {
                 <Link to={"/AgregarInstructor"}>
                 <button className='botonAgregar'>Agregar instructor</button>
                 </Link>
-                <button onClick={handleBack}>Volver</button>
                 <div className='container'>
                     {instructores && instructores.map((instructor) => (
                         <Instructor

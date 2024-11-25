@@ -4,6 +4,8 @@ import BackendCallerActividad from '../../backend-caller/Actividades';
 import BackendCallerInstructor from '../../backend-caller/Instructores';
 import BackendCallerTurno from '../../backend-caller/Turnos';
 import { reloadContext } from '../commonContexts/ReloadPageProvider';
+import '../commonStyles/Card-style.css'
+
 
 function Clase(props) {
     const { id, nombreInstructor, instructor, actividad, turno, dictada } = props;
@@ -125,6 +127,15 @@ function Clase(props) {
         }
     };
 
+    const eliminarClase = async () => {
+        setLoading(true);
+        await axios.delete(`http://127.0.0.1:5000/api/clases/${id}`);
+        setReload(!reload);
+        setLoading(false);
+        cerrarModal();
+    };
+
+
     return (
         <div>
             <div className='box'>
@@ -147,6 +158,7 @@ function Clase(props) {
                         <p><strong>Instructor:</strong> {nombreInstructor + " " + instructor}</p>
                         <p><strong>Turno:</strong> {turno}</p>
                         <p><strong>Dictada:</strong> {dictada}</p>
+                        <button className='boton-eliminar' onClick={eliminarClase}>Eliminar</button>
                         <button onClick={cerrarModal}>Cerrar</button>
                     </div>
                 </div>
