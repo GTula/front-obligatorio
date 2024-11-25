@@ -126,10 +126,10 @@ function AgregarClase() {
             </div>
             <button className='boton-agregar' onClick={() => postClase(info)}>AGREGAR CLASE</button>
             {loading && (
-                <div class="loading-modal">
-                    <div class="loading-content">
-                        <div class="loading-spinner"></div>
-                        <p class="loading-text">Cargando...</p>
+                <div className="loading-modal">
+                    <div className="loading-content">
+                        <div className="loading-spinner"></div>
+                        <p className="loading-text">Cargando...</p>
                     </div>
                 </div>
             )}

@@ -17,35 +17,8 @@ function Actividad(props) {
     const [reload, setReload] = useContext(reloadContext);
     const [loading, setLoading] = useState(false);
 
-    async function eliminarActividad(id) {
-        setLoading(true);
-        try{
-            await BackendCallerActividad.deleteActividadById(id);
-            setReload(!reload);
-        }
-        catch (err) {
-            alert('Error al conectar con el servidor');
-        }
-        finally {
-            setLoading(false); 
-        }
-    }
 
-    async function modificarActividad() {
-        setLoading(true);
-        try{
-            await BackendCallerActividad.putActividadById(id, info);
-            setReload(!reload);
-            setShowNewModal(false);
-        }
-        catch (err) {
-            alert('Error al conectar con el servidor');
-        }
-        finally {
-            setLoading(false); 
-        }
-    }
-
+    
     function abrirNewModal() {
         setShowNewModal(true);
         setInfo({
@@ -65,8 +38,35 @@ function Actividad(props) {
             [name]: value,
         });
     };
+    async function modificarActividad() {
+        setLoading(true);
+        try{
+            await BackendCallerActividad.putActividadById(id, info);
+            setReload(!reload);
+            setShowNewModal(false);
+        }
+        catch (err) {
+            alert('Error al conectar con el servidor');
+        }
+        finally {
+            setLoading(false); 
+        }
+    }
 
-    // const eliminarActividad = 
+    async function eliminarActividad(){
+        setLoading(true);
+        try{
+            await BackendCallerActividad.deleteActividadById(id);
+            setReload(!reload);     
+            setShowDetailsModal(false);
+        }
+        catch (err) {
+            alert('Error al conectar con el servidor');
+        }
+        finally {
+            setLoading(false);
+        }
+    }
 
     function abrirDetailsModal() {
         setShowDetailsModal(true);
@@ -124,7 +124,7 @@ function Actividad(props) {
                         <h3>Detalles de la actividad</h3>
                         <p>Nombre: {nombre}</p>
                         <p>Costo: {costo}</p>
-                        {/* <button onClick={eliminarActividad}>Eliminar</button> */}
+                        <button onClick={eliminarActividad}>Eliminar</button>
                         <button onClick={cerrarDetailsModal}>Cerrar</button>
                     </div>
                 </div>
