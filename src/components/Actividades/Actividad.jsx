@@ -2,11 +2,13 @@ import React, { useContext, useState } from 'react';
 import '../commonStyles/Card-style.css';
 import BackendCallerActividad from '../../backend-caller/Actividades';
 import { reloadContext } from '../commonContexts/ReloadPageProvider';
+import axios from 'axios';
 
 function Actividad(props) {
     const { id, nombre, costo } = props;
 
     const [showNewModal, setShowNewModal] = useState(false);
+    const [showDetailsModal, setShowDetailsModal] = useState(false);
     const [info, setInfo] = useState({
         nombre: nombre || '',
         costo: costo || '',
@@ -64,11 +66,21 @@ function Actividad(props) {
         });
     };
 
+    // const eliminarActividad = 
+
+    function abrirDetailsModal() {
+        setShowDetailsModal(true);
+    }
+    function cerrarDetailsModal() {
+        setShowDetailsModal(false);
+    }
+
     return (
         <div className="box">
-            <h2>{`Descripcion: ${nombre}, Costo: ${costo}`}</h2>
+            <h2 className='titulooo'>{` ${nombre}`}</h2>
             <div className="card-options">
                 <button className="boton-card" onClick={abrirNewModal}>Modificar</button>
+                <button className="boton-card" onClick={abrirDetailsModal}>Detalles</button>    
             </div>
 
             {showNewModal && (
@@ -103,6 +115,17 @@ function Actividad(props) {
                     <div className="loading-content">
                         <div className="loading-spinner"></div>
                         <p className="loading-text">Cargando...</p>
+                    </div>
+                </div>
+            )}
+            {showDetailsModal && (
+                <div className="modal-overlay">
+                    <div className="modal">
+                        <h3>Detalles de la actividad</h3>
+                        <p>Nombre: {nombre}</p>
+                        <p>Costo: {costo}</p>
+                        {/* <button onClick={eliminarActividad}>Eliminar</button> */}
+                        <button onClick={cerrarDetailsModal}>Cerrar</button>
                     </div>
                 </div>
             )}

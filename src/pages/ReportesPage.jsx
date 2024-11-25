@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { authenticatedContext } from "../App";
 import { useNavigate } from "react-router-dom";
 import './pagesStyles.css';
+import { Link } from "react-router-dom";
 
 function Reportes(){
 
@@ -18,6 +19,9 @@ function Reportes(){
     }
     return (
         <div>
+            <Link to="/">
+                <button className="boton-arriba-izquierda">🏠 Ir a Home</button>
+            </Link>
             <h1>Menu</h1>
             <div className="opciones-menu">
             <button onClick={HandlerMasAlumnos}>Actividades con mas alumnos</button>

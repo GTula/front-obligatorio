@@ -22,6 +22,12 @@ function Estudiante(props) {
         apellido: apellido || '',
     });
 
+    const [showLinkModal, setShowLinkModal] = useState(false);
+    const [clasesDisponibles, setClasesDisponibles] = useState([]);
+    const [selectedClass, setSelectedClass] = useState('');
+    const [equipamiento, setEquipamiento] = useState('');
+    const [equipamientosDisponibles, setEquipamientosDisponibles] = useState([]);
+
     async function eliminarEstudiante(ci) {
         setLoading(true);
         try{
@@ -76,32 +82,55 @@ function Estudiante(props) {
         });
     }
 
-    const vincularClase = async () => {
-        const idClase = prompt("Ingrese el ID de la clase a la que desea vincular al estudiante:");
-        const idEquipo = prompt("Ingrese el ID del equipamiento al que desea vincular al estudiante:");
+    const abrirModalVinculacion = () => {
+        setLoading(true);
+        axios.all([
+            axios.get('http://127.0.0.1:5000/api/clases'),
+            axios.get('http://127.0.0.1:5000/api/equipamiento')
+        ])
+        .then(axios.spread((clasesResponse, equipamientosResponse) => {
+            setClasesDisponibles(clasesResponse.data);
+            setEquipamientosDisponibles(equipamientosResponse.data);
+            setShowLinkModal(true);
+        }))
+        .catch(error => {
+            alert("Error al cargar los datos disponibles.");
+        })
+        .finally(() => {
+            setLoading(false);
+        });
+    };
 
-        if (!idClase) {
-            alert("Debe ingresar un ID de clase válido.");
+    const confirmarVinculacion = async () => {
+        if (!selectedClass) {
+            alert("Debe seleccionar una clase.");
             return;
         }
+        if (!equipamiento) {
+            alert("Debe seleccionar un equipamiento.");
+            return;
+        }
+
         setLoading(true);
         try {
             const response = await axios.post('http://127.0.0.1:5000/api/alumno-clase', {
                 ci_alumno: ci,
-                id_clase: idClase,
-                id_equipamiento: idEquipo
+                id_clase: selectedClass,
+                id_equipamiento: equipamiento
             });
 
             alert(`Éxito: ${response.data.mensaje}`);
+            setShowLinkModal(false);
+            setSelectedClass('');
+            setEquipamiento('');
         } catch (error) {
             if (error.response) {
                 alert(`Error del servidor: ${error.response.data.error}`);
             } else {
                 alert("Error al conectar con el servidor.");
             }
-        }
-        finally {
-            setLoading(false); 
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -135,7 +164,7 @@ function Estudiante(props) {
                         <p><strong>Apellido:</strong> {studentDetails.apellido}</p>
                         <p><strong>Fecha de Nacimiento:</strong> {studentDetails.fecha_nacimiento}</p>
                         <button onClick={cerrarModal}>Cerrar</button>
-                        <button onClick={vincularClase}>Vincular clase</button>
+                        <button onClick={abrirModalVinculacion}>Vincular clase</button>
                     </div>
                 </div>
             )}
@@ -159,16 +188,58 @@ function Estudiante(props) {
                             value={info.apellido}
                             onChange={handleInputChange}
                         />
-                        <button onClick={modificarAlumno}>Guardar</button>
-                        <button onClick={cerrarModal}>Cancelar</button>
+                        <button className='boton-card' onClick={modificarAlumno}>Guardar</button>
+                        <button className='boton-card' onClick={cerrarModal}>Cancelar</button>
+                    </div>
+                </div>
+            )}
+            {showLinkModal && (
+                <div className='modal-overlay'>
+                    <div className='modal'>
+                        <h2>Vincular a Clase</h2>
+                        <div className='container-inputs'>
+                            <label>Clase:</label>
+                            <select 
+                                value={selectedClass}
+                                onChange={(e) => setSelectedClass(e.target.value)}
+                            >
+                                <option value="">Seleccione una clase</option>
+                                {clasesDisponibles.map((clase) => (
+                                    <option key={clase.id_clase} value={clase.id_clase}>
+                                        {`${clase.descripcion_actividad} - ${clase.hora_inicio} a ${clase.hora_final}`}
+                                    </option>
+                                ))}
+                            </select>
+
+                            <label>Equipamiento:</label>
+                            <select
+                                value={equipamiento}
+                                onChange={(e) => setEquipamiento(e.target.value)}
+                            >
+                                <option value="">Seleccione un equipamiento</option>
+                                {equipamientosDisponibles.map((equip) => (
+                                    <option key={equip.id} value={equip.id}>
+                                        {`${equip.descripcion} - Estado: ${equip.estado}`}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                        <div className='modal-buttons'>
+                            <button className='boton-confirmar' onClick={confirmarVinculacion}>Confirmar</button>
+                            <button className='boton-cancelar' onClick={() => {
+                                setShowLinkModal(false);
+                                setSelectedClass('');
+                                setEquipamiento('');
+                            }}>Cancelar</button>
+                        </div>
                     </div>
                 </div>
             )}
             {loading && (
-                <div class="loading-modal">
-                    <div class="loading-content">
-                        <div class="loading-spinner"></div>
-                        <p class="loading-text">Cargando...</p>
+                <div className="loading-modal">
+                    <div className="loading-content">
+                        <div className="loading-spinner"></div>
+                        <p className="loading-text">Cargando...</p>
                     </div>
                 </div>
             )}

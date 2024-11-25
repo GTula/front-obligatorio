@@ -39,6 +39,7 @@ function AgregarActividad() {
         });
     };
 
+
     const cancelarAgregar = () =>{
         navigate('/actividad')
     }
@@ -51,12 +52,14 @@ function AgregarActividad() {
                     name="nombre"
                     value={info.nombre}
                     onChange={handleInputChange}
+                    placeholder='Nombre de la actividad'
                 />
                 <input
                     type="number"
                     name="costo"
                     value={info.costo}
                     onChange={handleInputChange}
+                    placeholder='Costo de la actividad'
                 />
                 
             </div>
