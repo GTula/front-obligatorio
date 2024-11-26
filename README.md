@@ -1,4 +1,5 @@
 • Instructivo completo para correr la aplicación de forma local
+
 Descargar e instalar Node.js
 -Descarga Node.js desde https://nodejs.org/.
 Durante la instalación:
