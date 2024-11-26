@@ -1,10 +1,10 @@
 • Instructivo completo para correr la aplicación de forma local
 
 Descargar e instalar Node.js
--Descarga Node.js desde https://nodejs.org/.
+- Descarga Node.js desde https://nodejs.org/.
 
 Durante la instalación:
--Asegúrate de marcar la opción para agregar Node.js al PATH del sistema.
+- Asegúrate de marcar la opción para agregar Node.js al PATH del sistema.
 
 Clonar el repositorio
 - Abre una terminal y ejecuta:
