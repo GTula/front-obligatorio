@@ -22,4 +22,4 @@ Correr la aplicación
 - Ejecuta el servidor de desarrollo:
 npm run dev
 
-Se deberá procedecer con el registro y logeo de usuario para poder acceder al programa.
+Se deberá procedecer con el registro y logueo de usuario para poder acceder al programa.
