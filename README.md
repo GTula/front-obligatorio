@@ -8,9 +8,9 @@ cd front-obligatorio
 
 Instalar dependencias
 - En la terminal, asegúrate de estar en el directorio del proyecto. Ejecuta:
-npm install
-npm install axios
-npm install react-router-dom
+- npm install
+- npm install axios
+- npm install react-router-dom
 
 Correr la aplicación
 - Ejecuta el servidor de desarrollo:
