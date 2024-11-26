@@ -2,6 +2,7 @@
 
 Descargar e instalar Node.js
 -Descarga Node.js desde https://nodejs.org/.
+
 Durante la instalación:
 -Asegúrate de marcar la opción para agregar Node.js al PATH del sistema.
 
