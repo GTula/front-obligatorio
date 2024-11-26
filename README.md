@@ -15,3 +15,5 @@ En la terminal, asegúrate de estar en el directorio del proyecto. Ejecuta:
 Correr la aplicación
 - Ejecuta el servidor de desarrollo:
 npm run dev
+
+Se deberá procedecer con el registro y logeo de usuario para poder acceder al programa.
